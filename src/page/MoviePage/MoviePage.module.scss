@@ -1,3 +1,66 @@
-.MoviePage{
+
+.content{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap:calc(var(--margin)*2)
+
+}
+.img{
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    img{
+        width: 100%;
+        height: auto
+        //object-fit: cover;
+        //object-position: center;
+        // aspect-ratio: 16/9;
+    }
+     
+}
+.rightCol{
+    display: grid;
+    gap: calc(var(--margin)*2);
+    align-content: start;
+}
+.info{
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: var(--margin);
+    align-content: start;
+    .infoLabel{
+        color: var(--secondary);
+        font-size: 15px;
+        font-weight: 300;
+    }
+}
+.subtitle{
+    text-align: center;
+}
+.session{
+     display: grid;
+     gap: var(--margin);
+     
+}
+.sessionTimesList{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,70px);
+  gap: calc(var(--margin)/2);
+}
+
+.sessionTimeItem{
+    background: var(--secondary);
+    color: aliceblue;
+    display: grid;
+    align-items: center;
+    justify-items: center;
     
+    border-radius: 4px;
+    &:hover{
+        cursor: pointer;
+        filter:brightness(120%)
+    }
+
 }

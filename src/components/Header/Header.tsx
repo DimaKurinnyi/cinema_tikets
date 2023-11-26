@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import style from './Header.modle.scss';
+import style from './Header.module.scss';
 interface HeaderProps {
   title: string;
 }
@@ -7,8 +7,8 @@ interface HeaderProps {
 export const Header = (props: HeaderProps) => {
   return (
     <div className={style.Header}>
-      <Link to="/">Mein</Link>
-      <h1>{props.title}</h1>
+      <Link className={style.backBtn} to="/">Mein</Link>
+      <h1 className={style.title} >{props.title}</h1>
     </div>
   );
 };

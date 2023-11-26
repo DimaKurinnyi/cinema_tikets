@@ -1,0 +1,1 @@
+export type Actors = 'Robert De Niro' | 'Jack Nicholson' | 'Tom Hanks' | 'Leonardo DiCaprio' | 'Cate Blanchett'

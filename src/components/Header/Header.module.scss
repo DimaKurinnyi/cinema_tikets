@@ -1,0 +1,25 @@
+.Header{
+    --firstColWidth:100px;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    gap: var(--margin);
+    height: 80px;
+}
+.backBtn{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    color:white;
+    background: var(--secondary);
+    padding: 8px 20px;
+    border-radius: 4px;
+
+    &:hover{
+        filter: brightness(120%);
+    }
+}
+.title{
+    padding-right: calc(var(--firstColWidth) + var(--margin));
+    text-align: center;
+}
