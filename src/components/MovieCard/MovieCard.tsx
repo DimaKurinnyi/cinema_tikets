@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import { Movie } from '../../types';
 import style from './MovieCard.module.scss';
 interface MovieCardProps {
-  data: { img: string; title: string; genre: string };
+  data: Movie;
 }
 export const MovieCard = (props: MovieCardProps) => {
   return (
-    <Link to="/movie">
+    <Link to={`/movie/${props.data.id}`}>
       <div className={style.MovieCard}>
         <div className={style.imgBlock}>
           <img src={props.data.img} alt="" />

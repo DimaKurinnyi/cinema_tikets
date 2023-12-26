@@ -7,7 +7,7 @@ export const App = () => {
     <div className={style.App}>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/movie" element={<MoviePage />} />
+        <Route path="/movie/:id" element={<MoviePage />} />
       </Routes>
     </div>
   );

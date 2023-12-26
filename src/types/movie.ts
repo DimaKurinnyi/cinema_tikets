@@ -8,6 +8,7 @@ export interface IMovieCard {
 }
 
 export interface Movie extends IMovieCard {
+  id:number;
   description: string;
   times: string[];
   duration: number;

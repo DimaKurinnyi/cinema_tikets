@@ -1,23 +1,23 @@
+import { useParams } from 'react-router-dom';
 import { Header } from '../../components';
-import { Movie } from '../../types';
+
 import style from './MoviePage.module.scss';
-const data: Movie = {
-  img: 'https://assets-global.website-files.com/6009ec8cda7f305645c9d91b/6408f6e7b5811271dc883aa8_batman-min.png',
-  title: 'Name movie1',
-  genre: 'Actions',
-  description: 'Lofgnniii ihj ihiu iuhiuhb iuhuh iuhuhui ihuhiuhiuhv  oerg eo io  ehhoh  oihh ',
-  times: ['10:00', '12.:30', '13:30', '14:30', '15:30'],
-  actors: ['Cate Blanchett', 'Tom Hanks', 'Robert De Niro'],
-  country: 'USA',
-  duration: 93,
-  year: 2023,
-  premier: '21 aug 2023',
-};
+
+import { useGetMoviesByIdQuery } from '../../api';
+
 
 export const MoviePage = () => {
+  const params = useParams()
+  const {isLoading,data} =useGetMoviesByIdQuery(params.id!)
+
+  if(isLoading)return <h1>Loading...</h1>
+
+  if(!data)return <Header title='No result'></Header>
+  
+
   return (
     <div className={style.MoviePage}>
-      <Header title="movie name" />
+      <Header title={data.title} />
       <div className={style.content}>
         <div className="">
           <div className={style.img}>
