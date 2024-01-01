@@ -1,6 +1,10 @@
 :root{
     --secondary:#7f8e91;
     --linkColor:#000000;
+    --accent:#00C7BB;
+    --margin:16px;
+    --statusAvailable:var(--accent);
+    --statusBusy:red;
+    --statusSelected:green;
 
-    --margin:16px
 }

@@ -25,17 +25,7 @@
     gap: calc(var(--margin)*2);
     align-content: start;
 }
-.info{
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: var(--margin);
-    align-content: start;
-    .infoLabel{
-        color: var(--secondary);
-        font-size: 15px;
-        font-weight: 300;
-    }
-}
+
 .subtitle{
     text-align: center;
 }
@@ -51,12 +41,12 @@
 }
 
 .sessionTimeItem{
-    background: var(--secondary);
+    background: var(--accent);
     color: aliceblue;
     display: grid;
     align-items: center;
     justify-items: center;
-    
+    padding: 8px 4px;
     border-radius: 4px;
     &:hover{
         cursor: pointer;

@@ -1,0 +1,36 @@
+.TicketPage {
+  display: grid;
+  justify-content: center;
+}
+.content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(var(--margin) * 2);
+  align-items: start;
+}
+.info {
+  display: grid;
+  gap: calc(var(--margin) * 2);
+}
+.title {
+  text-align: center;
+}
+.total {
+  font-size: 28px;
+  span {
+    font-weight: 100;
+    margin-right: var(--margin);
+  }
+}
+.buyBtn{
+    background-color: var(--accent);
+    color:white;
+    padding: 12px 24px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+    &:hover{
+        cursor:pointer;
+        filter:brightness(120%)
+    }
+}

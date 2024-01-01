@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { rtkApi } from '../api/rtkApi';
 import { movieReducer } from '../slices/moviesSlice';
+import { orderReducer } from '../slices/orderSlice';
 
 export const store = configureStore({
-  reducer: { movies: movieReducer, [rtkApi.reducerPath]: rtkApi.reducer },
+  reducer: { movies: movieReducer, order: orderReducer, [rtkApi.reducerPath]: rtkApi.reducer },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(rtkApi.middleware),
 });
 

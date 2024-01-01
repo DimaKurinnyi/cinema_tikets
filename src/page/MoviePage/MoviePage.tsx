@@ -1,19 +1,19 @@
-import { useParams } from 'react-router-dom';
-import { Header } from '../../components';
+import { Link, useParams } from 'react-router-dom';
+import { Header, InfoTable } from '../../components';
 
 import style from './MoviePage.module.scss';
 
 import { useGetMoviesByIdQuery } from '../../api';
-
+import { helpers } from './helpers';
 
 export const MoviePage = () => {
-  const params = useParams()
-  const {isLoading,data} =useGetMoviesByIdQuery(params.id!)
+  const params = useParams();
+  const { isLoading, data } = useGetMoviesByIdQuery(params.id!);
 
-  if(isLoading)return <h1>Loading...</h1>
+  if (isLoading) return <h1>Loading...</h1>;
 
-  if(!data)return <Header title='No result'></Header>
-  
+  if (!data) return <Header title="No result"></Header>;
+  const id = 1;
 
   return (
     <div className={style.MoviePage}>
@@ -26,24 +26,19 @@ export const MoviePage = () => {
           <div className={style.desc}>{data.description}</div>
         </div>
         <div className={style.rightCol}>
-          <div className={style.info}>
-            <div className={style.infoLabel}>Premier</div>
-            <div className={style.infoValue}>{data.premier}</div>
-            <div className={style.infoLabel}>In roles</div>
-            {/* {data.actors.map(actor=><div key={actor} className={style.infoValue}>{actor}</div>)} */}
-            <div className={style.infoValue}>{data.actors.join(', ')}</div>
-            <div className={style.infoLabel}>Length</div>
-            <div className={style.infoValue}>{data.duration}</div>
-            <div className={style.infoLabel}>Country</div>
-            <div className={style.infoValue}>{data.country}</div>
-            <div className={style.infoLabel}>Year</div>
-            <div className={style.infoValue}>{data.year}</div>
-          </div>
+          <InfoTable data={helpers.getInfoData(data)} />
+
           <div className={style.session}>
             <h3 className={style.subtitle}>Session</h3>
-            <div className={style.sessionTimesList}>
-              {data.times.map(time=><div key={time} className={style.sessionTimeItem}>{time}</div>)}
-            </div>
+            <Link to={`/buy/${id}`}>
+              <div className={style.sessionTimesList}>
+                {data.times.map((time) => (
+                  <div key={time} className={style.sessionTimeItem}>
+                    {time}
+                  </div>
+                ))}
+              </div>
+            </Link>
           </div>
         </div>
       </div>

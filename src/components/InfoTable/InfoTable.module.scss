@@ -1,0 +1,11 @@
+.infoTable{
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: var(--margin);
+    align-content: start;
+    .label{
+        color: var(--secondary);
+        font-size: 15px;
+        font-weight: 300;
+    }
+}
