@@ -30,11 +30,11 @@ export const MoviePage = () => {
 
           <div className={style.session}>
             <h3 className={style.subtitle}>Session</h3>
-            <Link to={`/buy/${id}`}>
+            <Link to={`/sessions/${id}`}>
               <div className={style.sessionTimesList}>
-                {data.times.map((time) => (
-                  <div key={time} className={style.sessionTimeItem}>
-                    {time}
+                {data.sessions.map((session) => (
+                  <div key={session.time} className={style.sessionTimeItem}>
+                    {session.time}
                   </div>
                 ))}
               </div>

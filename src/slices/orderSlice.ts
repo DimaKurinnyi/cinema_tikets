@@ -3,6 +3,7 @@ import { Seat } from '../types';
 
 export interface OrderState {
   seats: Seat[];
+  
 }
 
 const initialState: OrderState = {
@@ -21,8 +22,10 @@ const orderSlice = createSlice({
       state.seats = filteredSeats;
     },
     clearOrder: (state) => {
-      state.seats = [];
+      state.seats=[]
+
     },
+    
   },
 });
 

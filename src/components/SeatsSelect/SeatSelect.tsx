@@ -1,13 +1,29 @@
 import classNames from 'classnames';
+import { useParams } from 'react-router-dom';
+import { useGetSessionByIdQuery } from '../../api';
+import { Seat as ISeat } from '../../types';
 import style from './SeatSelect.module.scss';
 import { Seat } from './components/seat/Seat';
 
-export const SeatSelect = () => {
-  let seat = 1
-  let row = 1 
-  let resetNums = [4,6,5]
+type BuySeats = ISeat[] | undefined
+
+interface SeatSelectProps{
+  buySeats:BuySeats
+
+}
+
+export const SeatSelect = ({buySeats}:SeatSelectProps) => {
+
+  let seat = 1;
+  let row = 1;
+  let resetNums = [4, 6, 5];
   const emptyCells = [2, 3, 4, 5, 6, 12, 13, 14, 18, 19, 25, 26];
 
+  const isBusySeat = (row: number, seat: number, buySeats: ISeat[] | undefined) => {
+    return buySeats?.some((buySeat) => buySeat.row === row && buySeat.seat === seat);
+  };
+
+  
 
   return (
     <div className={style.SeatSelect}>
@@ -30,31 +46,25 @@ export const SeatSelect = () => {
           {Array(63)
             .fill(0)
             .map((item, i) => {
-              if(emptyCells.includes(i)){
-                return <div/>
-              }else{
-              const classes = classNames('ic-seat', {
-                [style.available]: true,
-                [style.busy]: false,
-                [style.selected]: false,
-              });
-              const data = {
-                id: seat,
-                row,
-                seat,
-                status: i !== 3 ? 'available' : 'busy',
-              };
-              if(seat === resetNums[row-1] || seat === 9){
-                seat = 1
-                row++;
-                data.row = row
-              }else{
-                seat++
+              if (emptyCells.includes(i)) {
+                return <div />;
+              } else {
+                const seatData = {
+                  id: seat,
+                  row,
+                  seat,
+                  status: isBusySeat(row, seat, buySeats) ? 'busy' : 'available',
+                };
+                if (seat === resetNums[row - 1] || seat === 9) {
+                  seat = 1;
+                  row++;
+                  seatData.row = row;
+                } else {
+                  seat++;
+                }
+
+                return <Seat key={i} data={seatData} />;
               }
-              
-             
-               return <Seat key={i} className={classes} data={data} />
-            };
             })}
         </div>
       </div>

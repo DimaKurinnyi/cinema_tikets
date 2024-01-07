@@ -1,5 +1,6 @@
-import { Actors } from "./actors";
-import { Country } from "./country";
+import { Actors } from './actors';
+import { Country } from './country';
+import { Session } from './session';
 
 export interface IMovieCard {
   img: string;
@@ -8,12 +9,15 @@ export interface IMovieCard {
 }
 
 export interface Movie extends IMovieCard {
-  id:number;
+  id: number;
   description: string;
   times: string[];
   duration: number;
-  country:Country
+  country: Country;
   year: number;
   actors: Actors[];
-  premier:string
+  premier: string;
+}
+export interface MovieWithSessions extends Movie {
+  sessions: Session[];
 }

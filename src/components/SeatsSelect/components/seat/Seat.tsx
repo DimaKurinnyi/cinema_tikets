@@ -5,7 +5,6 @@ import { addSeat, deleteSeat } from '../../../../slices/orderSlice';
 import style from './Seat.module.scss';
 
 interface SeatProps {
-  className: string;
   data: {
     id: number;
     seat: number;
