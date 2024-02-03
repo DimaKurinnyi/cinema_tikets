@@ -14,7 +14,7 @@ export const MoviePage = () => {
 
   if (!data) return <Header title="No result"></Header>;
   const id = 1;
-
+  console.log(data.sessions);
   return (
     <div className={style.MoviePage}>
       <Header title={data.title} />
@@ -30,15 +30,16 @@ export const MoviePage = () => {
 
           <div className={style.session}>
             <h3 className={style.subtitle}>Session</h3>
-            <Link to={`/sessions/${id}`}>
-              <div className={style.sessionTimesList}>
-                {data.sessions.map((session) => (
+
+            <div className={style.sessionTimesList}>
+              {data.sessions.map((session) => (
+                <Link to={`/sessions/${session.id}`} key={session.id}>
                   <div key={session.time} className={style.sessionTimeItem}>
                     {session.time}
                   </div>
-                ))}
-              </div>
-            </Link>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

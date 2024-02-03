@@ -40,3 +40,7 @@
         filter:brightness(120%)
     }
 }
+.disable{
+  pointer-events: none;
+  opacity: 0.5;
+}
