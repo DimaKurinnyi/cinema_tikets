@@ -8,7 +8,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/movie/:id" element={<MoviePage />} />
-        <Route path ='/sessions/:id' element = {<TicketPage/>}/>
+        <Route path ='movie/:movieId/sessions/:sessionId' element = {<TicketPage/>}/>
       </Routes>
     </div>
   );

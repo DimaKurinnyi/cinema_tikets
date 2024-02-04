@@ -33,7 +33,7 @@ export const MoviePage = () => {
 
             <div className={style.sessionTimesList}>
               {data.sessions.map((session) => (
-                <Link to={`/sessions/${session.id}`} key={session.id}>
+                <Link to={`/movie/${session.movieId}/sessions/${session.id}`} key={session.id}>
                   <div key={session.time} className={style.sessionTimeItem}>
                     {session.time}
                   </div>

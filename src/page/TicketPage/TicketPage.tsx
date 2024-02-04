@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useGetSessionByIdQuery } from '../../api';
+import { useGetMoviesByIdQuery, useGetSessionByIdQuery } from '../../api';
 import { useUpdateSeatsByIdMutation } from '../../api/order';
 import { Header, InfoTable, SeatSelect } from '../../components';
 import { OrderState, clearOrder } from '../../slices/orderSlice';
@@ -11,9 +11,12 @@ import { OrderData } from '../../types';
 import style from './TicketPage.module.scss';
 
 export const TicketPage = () => {
+  const imgRef = useRef<HTMLImageElement>(null);
   const params = useParams();
   const [isDisabled, setIsDisabled] = useState(false);
-  const { isLoading, data } = useGetSessionByIdQuery(params.id!);
+  const [qrCode, setQrCode] = useState(null);
+  const { isLoading, data: sessionData } = useGetSessionByIdQuery(params.sessionId!);
+  const { data: movieData } = useGetMoviesByIdQuery(params.movieId!);
   const [buyTicket, { isSuccess }] = useUpdateSeatsByIdMutation();
   const dispatch = useDispatch();
   const { order } = useSelector((state: RootState) => state);
@@ -26,6 +29,14 @@ export const TicketPage = () => {
       label: `Ticket${i + 1}`,
       value: `Row ${row} place ${seat}`,
     }));
+  };
+  const getSessionInfo = (time: string) => {
+    return [
+      {
+        label: 'Start',
+        value: time,
+      },
+    ];
   };
   const getPriceInfo = (count: number, price: number) => {
     return [
@@ -41,14 +52,21 @@ export const TicketPage = () => {
   };
 
   const onClick = () => {
-    const buySeats = data?.seat?.buy_seats || [];
+    const buySeats = sessionData?.seat?.buy_seats || [];
     const orderData: OrderData = {
-      id: data?.seatId!,
+      id: sessionData?.seatId!,
       buy_seats: [...buySeats, ...order.seats],
     };
     buyTicket(orderData);
-    setIsDisabled(true)
+    setIsDisabled(true);
   };
+  useEffect(() => {
+    if (qrCode) {
+      if (imgRef.current) {
+        imgRef.current.src = qrCode;
+      }
+    }
+  }, [qrCode]);
   useEffect(() => {
     if (isSuccess) {
       dispatch(clearOrder());
@@ -56,31 +74,45 @@ export const TicketPage = () => {
   }, [isSuccess]);
 
   if (isLoading) return <h1>Loading...</h1>;
+  if (!sessionData) return null;
   return (
     <div className={style.TicketPage}>
-      <Header title="Tickets" />
+      <Header title="Buy tickets" />
       <div className={style.content}>
-        <SeatSelect buySeats={data?.seat?.buy_seats} />
-        {seatCount === 0 && <h1 className={style.plug}>Chose a seat</h1>}
-        {!!seatCount && (
+        <SeatSelect buySeats={sessionData?.seat?.buy_seats} />
+        <section>
           <div className={style.info}>
-            <h3 className={style.title}>Name Movie</h3>
-            <InfoTable data={getOrderInfo(order)} />
-            <div className={style.info}>
-              <InfoTable data={getPriceInfo(order.seats.length, price)} />
-            </div>
-
-            <div className={style.total}>
-              <span>Total:</span>
-              <strong>{totalPrice}</strong>
-            </div>
-            <div
-              className={classNames(style.buyBtn, 'hover', { [style.disable]: isDisabled })}
-              onClick={onClick}>
-              Buy
-            </div>
+            <h1 className={style.plug}>{movieData?.title}</h1>
+            <InfoTable data={getSessionInfo(sessionData.time)} />
           </div>
-        )}
+          {seatCount === 0 && <h1 className={style.plug}>Chose a seat</h1>}
+          {!!seatCount && (
+            <div className={style.info}>
+              <h3 className={style.title}>Selected place</h3>
+              <InfoTable data={getOrderInfo(order)} />
+              <div className={style.info}>
+                <InfoTable data={getPriceInfo(seatCount, price)} />
+              </div>
+
+              <div className={style.total}>
+                <span>Total:</span>
+                <strong>{totalPrice}</strong>
+              </div>
+              {!qrCode && (
+                <div
+                  className={classNames(style.buyBtn, 'hover', { [style.disable]: isDisabled })}
+                  onClick={onClick}>
+                  Buy
+                </div>
+              )}
+            </div>
+          )}
+          {qrCode && (
+            <div className={style.qr}>
+              <img ref={imgRef} src="" alt="" />
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );
