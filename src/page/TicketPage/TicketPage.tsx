@@ -14,7 +14,7 @@ export const TicketPage = () => {
   const imgRef = useRef<HTMLImageElement>(null);
   const params = useParams();
   const [isDisabled, setIsDisabled] = useState(false);
-  const [qrCode, setQrCode] = useState(null);
+  const [qrCode, setQrCode] = useState('');
   const { isLoading, data: sessionData } = useGetSessionByIdQuery(params.sessionId!);
   const { data: movieData } = useGetMoviesByIdQuery(params.movieId!);
   const [buyTicket, { isSuccess }] = useUpdateSeatsByIdMutation();
@@ -69,6 +69,15 @@ export const TicketPage = () => {
   }, [qrCode]);
   useEffect(() => {
     if (isSuccess) {
+      const data = encodeURI(
+        JSON.stringify({
+          movie: movieData?.title,
+          time: sessionData?.time,
+          sessionId: sessionData?.id,
+          seats: order.seats,
+        }),
+      );
+      setQrCode(`https://api.qrserver.com/v1/create-qr-code/?size=200*200&data=${data}`);
       dispatch(clearOrder());
     }
   }, [isSuccess]);
